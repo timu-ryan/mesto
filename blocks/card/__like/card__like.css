@@ -3,7 +3,7 @@
   height: 19px;
   margin: 0;
   padding: 0;
-  background-image: url(/images/like.svg);
+  background-image: url(images/like.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-color: inherit;
@@ -15,6 +15,4 @@
   opacity: 0.6;
 }
 
-.card__like:active {
-  background-image: url(/images/active-like.svg);
-}
+

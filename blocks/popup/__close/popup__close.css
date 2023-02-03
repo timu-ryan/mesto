@@ -4,13 +4,11 @@
   position: relative;
   width: 32px;
   height: 32px;
-  /* top: -338px; */
   top: -333px;
   right: -438px;
-
   border: none;
   background-color: rgba(0, 0, 0, 0);
-  background-image: url(/images/close.svg);
+  background-image: url(images/close.svg);
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -24,7 +22,7 @@
   .popup__close {
     width: 20px;
     height: 20px;
-    background-image: url(/images/mobile_close.svg);
+    background-image: url(images/mobile_close.svg);
     top: -334px;
     right: -262px;
   }

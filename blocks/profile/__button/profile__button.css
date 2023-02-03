@@ -1,14 +1,10 @@
 .profile__button {
-  /* align-self: center; */
   margin: auto 0 auto auto;
-
   border: 2px solid white;
   background-color: inherit;
-
-  background-image: url(/images/plus.svg);
+  background-image: url(images/plus.svg);
   background-repeat: no-repeat;
   background-position: center;
-
   width: 150px;
   height: 50px;
 }
@@ -22,6 +18,6 @@
   .profile__button {
     width: 282px;
     margin: 0 auto;
-    background-image: url(/images/mobile_plus.svg);
+    background-image: url(images/mobile_plus.svg);
   }
 }
