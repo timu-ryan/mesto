@@ -16,4 +16,4 @@
 
 # Ссылка на проект в github pages
 
-https://github.com/timu-ryan/mesto
+https://timu-ryan.github.io/mesto/
