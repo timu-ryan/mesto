@@ -1,6 +1,7 @@
 .profile__button {
   margin: auto 0 auto auto;
   border: 2px solid white;
+  border-radius: 2px;
   background-color: inherit;
   background-image: url(images/plus.svg);
   background-repeat: no-repeat;

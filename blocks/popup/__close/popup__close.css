@@ -4,7 +4,7 @@
   position: relative;
   width: 32px;
   height: 32px;
-  top: -333px;
+  top: -337px;
   right: -438px;
   border: none;
   background-color: rgba(0, 0, 0, 0);
@@ -23,7 +23,7 @@
     width: 20px;
     height: 20px;
     background-image: url(images/mobile_close.svg);
-    top: -334px;
+    top: -338px;
     right: -262px;
   }
 }

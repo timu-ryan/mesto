@@ -1,17 +1,16 @@
 let popup = document.querySelector(".popup");
-let openPopupButton = document.querySelector(".profile__edit");
-let closePopupButton = document.querySelector(".popup__close");
+let popupOpen = document.querySelector(".profile__edit");
+let popupClose = document.querySelector(".popup__close");
 
-// let saveButton = document.querySelector(".popup__button");
-let formElement = document.querySelector(".popup__button");
+let formElement = document.querySelector(".popup__form");
+let nameInput = document.querySelector(".popup__input_name");
+let jobInput = document.querySelector(".popup__input_description");
 
 function openPopup() {
-  let pupupTextName = document.querySelector(".popup__name");
-  let pupupTextDescription = document.querySelector(".popup__description");
-  let name = document.querySelector(".profile__name-text").textContent;
+  let name = document.querySelector(".profile__name-text").textContent; // имя из профиля
   let description = document.querySelector(".profile__description").textContent;
-  pupupTextName.setAttribute("value", name);
-  pupupTextDescription.setAttribute("value", description);
+  nameInput.value = name; //задаем value инпута значения со страницы, чтобы при открытии попапа отображались они
+  jobInput.value = description;
   popup.classList.add("popup_opened");
 }
 
@@ -19,20 +18,16 @@ function closePopup() {
   popup.classList.remove("popup_opened");
 }
 
-openPopupButton.addEventListener("click", openPopup);
-closePopupButton.addEventListener("click", closePopup);
-
 function handleFormSubmit(evt) {
-  evt.preventDefault();
-  let newName = document.querySelector(".popup__name");
-  let newDescription = document.querySelector(".popup__description");
-
+  evt.preventDefault(); // отменяет стандартную форму отправки
   let name = document.querySelector(".profile__name-text");
   let description = document.querySelector(".profile__description");
-  name.textContent = newName.value;
-  description.textContent = newDescription.value;
+  name.textContent = nameInput.value; // изменяем значения на странице на значения, введенные в импуте
+  description.textContent = jobInput.value;
   closePopup();
 }
 
-formElement.addEventListener("click", handleFormSubmit);
+popupOpen.addEventListener("click", openPopup);
+popupClose.addEventListener("click", closePopup);
+formElement.addEventListener("submit", handleFormSubmit);
 formElement.addEventListener("submit", handleFormSubmit);
