@@ -1,0 +1,6 @@
+.card__trash {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 18px;
+}
