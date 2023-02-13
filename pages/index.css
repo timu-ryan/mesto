@@ -9,6 +9,7 @@
 @import url(../blocks/card/__text/card__text.css);
 @import url(../blocks/card/__delete/card__delete.css);
 @import url(../blocks/card/__trash/card__trash.css);
+@import url(../blocks/card/__trash-lid/card__trash-lid.css);
 
 @import url(../blocks/cards/cards.css);
 
