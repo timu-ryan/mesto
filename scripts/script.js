@@ -47,10 +47,6 @@ function openAddPopup() {
   openPopup(popupNewItem);
 }
 
-function openCardPopup() {
-  openPopup(popupCard);
-}
-
 function closePopupEdit() {
   closePopup(popupEdit);
 }
@@ -80,7 +76,7 @@ function addCard(card) {
   const cardImage = cardElement.querySelector(".card__image");
   const deleteButton = cardElement.querySelector(".card__delete");
   function openImage () {
-    openCardPopup();
+    openPopup(popupCard);
     popupImage.setAttribute("src", card.link);
     popupImage.setAttribute("alt", card.name);
     popupImageDescription.textContent = cardElement.querySelector(".card__text").textContent;
