@@ -47,14 +47,17 @@ function openAddPopup() {
   openPopup(popupNewItem);
 }
 
+function openCardPopup() {
+  openPopup(popupCard);
+}
+
 function closePopupEdit() {
   closePopup(popupEdit);
 }
 
 function closeAddPopup() {
   closePopup(popupNewItem);
-  placeNameInput.value = "";
-  placeLinkInput.value = ""; // очищаем input после закрытия попапа
+  formNewItemElement.reset();   // очищаем input после закрытия попапа
 }
 
 function closeCardPopup() {
@@ -65,7 +68,7 @@ function handleFormEditSubmit(evt) {
   evt.preventDefault(); // отменяет стандартную форму отправки
   profileName.textContent = nameInput.value; // изменяем значения на странице на значения, введенные в импуте
   profileDescription.textContent = jobInput.value;
-  closePopup();
+  closePopupEdit();
 }
 
 initialCards.forEach((card) => {  //загружает начальные 6 фотографий
@@ -77,10 +80,9 @@ function addCard(card) {
   const cardImage = cardElement.querySelector(".card__image");
   const deleteButton = cardElement.querySelector(".card__delete");
   function openImage () {
-    popupCard.classList.add("popup_opened");
-    popupImage.setAttribute("src", cardImage.getAttribute("src"));
-    popupImage.setAttribute("alt", cardImage.getAttribute("alt"));
-    popupCard.classList.add("popup_card"); // изменяем opacity background'а
+    openCardPopup();
+    popupImage.setAttribute("src", card.link);
+    popupImage.setAttribute("alt", card.name);
     popupImageDescription.textContent = cardElement.querySelector(".card__text").textContent;
   }
   function likeCard (evt) {
