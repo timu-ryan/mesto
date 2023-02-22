@@ -6,28 +6,31 @@ const popupImageDescription = document.querySelector(".popup__image-description"
 
 const popupEditOpen = document.querySelector(".profile__edit");
 const popupAddOpen = document.querySelector(".profile__button");
-// const popupCardOpen = document.querySelector(".card__image");
-// const popupCloseList = document.querySelectorAll(".popup__close");
+
 const popupEditClose = document.querySelector(".popup__close_button_edit");
 const popupNewItemClose = document.querySelector(".popup__close_button_new-item");
 const popupCardClose = document.querySelector(".popup__close_button_card");
 
+const popupOverlays = document.querySelectorAll('.popup');
 
-// const formElements = document.querySelectorAll(".popup__form");
 const formNewItemElement = document.querySelector(".popup__form_object_new-item");
 const formEditElement = document.querySelector(".popup__form_object_edit");
-
-const nameInput = document.querySelector(".popup__input_text_name");
-const jobInput = document.querySelector(".popup__input_text_description");
 
 const profileName = document.querySelector(".profile__name-text"); // имя из профиля
 const profileDescription = document.querySelector(".profile__description");
 
-const placeNameInput = document.querySelector(".popup__input_place_name");
-const placeLinkInput = document.querySelector(".popup__input_place_link");
-
 const cardContainer = document.querySelector(".cards");
 const cardTemplate = document.querySelector("#card-template").content.querySelector(".card"); //содержимое card template -> карта
+
+const editForm = document.forms.edit;
+const placeForm = document.forms.placeAdd; 
+
+const nameInput = editForm.elements.name;
+const descriptionInput = editForm.elements.description;
+const placeNameInput = placeForm.elements.placeName;
+const placeLinkInput = placeForm.elements.placeLink;
+
+const errorMessageElements = document.querySelectorAll('.popup__input-error');
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
@@ -39,7 +42,7 @@ function closePopup(popup) {
 
 function openPopupEdit() {
   nameInput.value = profileName.textContent; //задаем value инпута значения со страницы, чтобы при открытии попапа отображались они
-  jobInput.value = profileDescription.textContent;
+  descriptionInput.value = profileDescription.textContent;
   openPopup(popupEdit);
 }
 
@@ -49,21 +52,48 @@ function openAddPopup() {
 
 function closePopupEdit() {
   closePopup(popupEdit);
+  errorMessageElements.forEach((element) => {
+    element.textContent = '';
+  })
+  placeNameInput.classList.remove('popup__input_invalid');
+  placeLinkInput.classList.remove('popup__input_invalid');
 }
 
 function closeAddPopup() {
   closePopup(popupNewItem);
   formNewItemElement.reset();   // очищаем input после закрытия попапа
+  errorMessageElements.forEach((element) => {
+    element.textContent = '';
+  })
+  placeNameInput.classList.remove('popup__input_invalid');
+  placeLinkInput.classList.remove('popup__input_invalid');
 }
 
 function closeCardPopup() {
   closePopup(popupCard);
 }
 
+function closePopupOverlay (evt) {
+  if (Array.from(evt.target.classList).includes('popup')) {
+    closePopup(evt.target)
+  }
+}
+popupOverlays.forEach((overlay) => {
+  overlay.addEventListener('click', closePopupOverlay);
+})
+function escapeClose (evt) {
+  if (evt.key === 'Escape') {
+    closeAddPopup();
+    closePopupEdit();
+    closeCardPopup();
+  }
+} 
+document.addEventListener('keydown', escapeClose);
+
 function handleFormEditSubmit(evt) {
   evt.preventDefault(); // отменяет стандартную форму отправки
   profileName.textContent = nameInput.value; // изменяем значения на странице на значения, введенные в импуте
-  profileDescription.textContent = jobInput.value;
+  profileDescription.textContent = descriptionInput.value;
   closePopupEdit();
 }
 
