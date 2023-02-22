@@ -22,15 +22,25 @@ const profileDescription = document.querySelector(".profile__description");
 const cardContainer = document.querySelector(".cards");
 const cardTemplate = document.querySelector("#card-template").content.querySelector(".card"); //содержимое card template -> карта
 
-const editForm = document.forms.edit;
+const profileForm = document.forms.edit;
 const placeForm = document.forms.placeAdd; 
 
-const nameInput = editForm.elements.name;
-const descriptionInput = editForm.elements.description;
+const nameInput = profileForm.elements.name;
+const descriptionInput = profileForm.elements.description;
 const placeNameInput = placeForm.elements.placeName;
 const placeLinkInput = placeForm.elements.placeLink;
 
-const errorMessageElements = document.querySelectorAll('.popup__input-error');
+const errorProfileNameMessageElement = profileForm.querySelector('.name-input-error');
+const errorProfileDescriptionMessageElement = profileForm.querySelector('.description-input-error');
+const errorPlaceNameMessageElement = placeForm.querySelector('.place-name-input-error');
+const errorPlaceDescriptionMessageElement = placeForm.querySelector('.place-description-input-error');
+
+const invalidInputClass = 'popup__input_invalid';
+
+console.log(errorProfileNameMessageElement);
+console.log(errorProfileDescriptionMessageElement);
+console.log(errorPlaceNameMessageElement);
+console.log(errorPlaceDescriptionMessageElement);
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
@@ -52,21 +62,15 @@ function openAddPopup() {
 
 function closePopupEdit() {
   closePopup(popupEdit);
-  errorMessageElements.forEach((element) => {
-    element.textContent = '';
-  })
-  placeNameInput.classList.remove('popup__input_invalid');
-  placeLinkInput.classList.remove('popup__input_invalid');
+  hideInputError(nameInput, errorProfileNameMessageElement, invalidInputClass);
+  hideInputError(descriptionInput, errorProfileDescriptionMessageElement, invalidInputClass);
 }
 
 function closeAddPopup() {
   closePopup(popupNewItem);
   formNewItemElement.reset();   // очищаем input после закрытия попапа
-  errorMessageElements.forEach((element) => {
-    element.textContent = '';
-  })
-  placeNameInput.classList.remove('popup__input_invalid');
-  placeLinkInput.classList.remove('popup__input_invalid');
+  hideInputError(placeNameInput, errorPlaceNameMessageElement, invalidInputClass);
+  hideInputError(placeLinkInput, errorPlaceDescriptionMessageElement, invalidInputClass);
 }
 
 function closeCardPopup() {
@@ -83,12 +87,9 @@ popupOverlays.forEach((overlay) => {
 })
 function escapeClose (evt) {
   if (evt.key === 'Escape') {
-    closeAddPopup();
-    closePopupEdit();
-    closeCardPopup();
+    document.querySelector('.popup_opened').classList.remove("popup_opened");
   }
 } 
-document.addEventListener('keydown', escapeClose);
 
 function handleFormEditSubmit(evt) {
   evt.preventDefault(); // отменяет стандартную форму отправки
@@ -144,5 +145,6 @@ popupAddOpen.addEventListener("click", openAddPopup);
 popupEditClose.addEventListener("click", closePopupEdit);
 popupNewItemClose.addEventListener("click", closeAddPopup);
 popupCardClose.addEventListener("click", closeCardPopup);
+document.addEventListener('keydown', escapeClose);
 formEditElement.addEventListener("submit", handleFormEditSubmit);
 formNewItemElement.addEventListener("submit", handleFormAddCardSubmit);
