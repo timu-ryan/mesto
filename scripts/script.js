@@ -37,11 +37,6 @@ const errorPlaceDescriptionMessageElement = placeForm.querySelector('.place-desc
 
 const invalidInputClass = 'popup__input_invalid';
 
-console.log(errorProfileNameMessageElement);
-console.log(errorProfileDescriptionMessageElement);
-console.log(errorPlaceNameMessageElement);
-console.log(errorPlaceDescriptionMessageElement);
-
 function openPopup(popup) {
   popup.classList.add("popup_opened");
 }
