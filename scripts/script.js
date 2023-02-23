@@ -11,6 +11,9 @@ const popupEditClose = document.querySelector(".popup__close_button_edit");
 const popupNewItemClose = document.querySelector(".popup__close_button_new-item");
 const popupCardClose = document.querySelector(".popup__close_button_card");
 
+const popupAddSubmitButton = document.querySelector('.popup__button_add');
+const disableSubmitButtonClass = 'popup__button_disabled';
+
 const popupOverlays = document.querySelectorAll('.popup');
 
 const formNewItemElement = document.querySelector(".popup__form_object_new-item");
@@ -39,10 +42,12 @@ const invalidInputClass = 'popup__input_invalid';
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
+  document.addEventListener('keydown', escapeClose);
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
+  document.removeEventListener('keydown', escapeClose);
 }
 
 function openPopupEdit() {
@@ -82,7 +87,7 @@ popupOverlays.forEach((overlay) => {
 })
 function escapeClose (evt) {
   if (evt.key === 'Escape') {
-    document.querySelector('.popup_opened').classList.remove("popup_opened");
+    closePopup(document.querySelector('.popup_opened'));
   }
 } 
 
@@ -133,6 +138,7 @@ function handleFormAddCardSubmit(evt) {
   evt.preventDefault(); // отменяет стандартную форму отправки
   renderCard(addCard(card));
   closeAddPopup();
+  disableButton(popupAddSubmitButton, disableSubmitButtonClass);
 }
 
 popupEditOpen.addEventListener("click", openPopupEdit);
@@ -140,6 +146,5 @@ popupAddOpen.addEventListener("click", openAddPopup);
 popupEditClose.addEventListener("click", closePopupEdit);
 popupNewItemClose.addEventListener("click", closeAddPopup);
 popupCardClose.addEventListener("click", closeCardPopup);
-document.addEventListener('keydown', escapeClose);
 formEditElement.addEventListener("submit", handleFormEditSubmit);
 formNewItemElement.addEventListener("submit", handleFormAddCardSubmit);
