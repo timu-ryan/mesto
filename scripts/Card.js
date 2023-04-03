@@ -4,26 +4,30 @@ export default class Card {
     this._link = data.link;
     this._selector = selector;
     this._imageClick = imageClick;
+    this._cardTemplate = document.querySelector(this._selector).content.querySelector(".card");
+    this._cardElement = this._cardTemplate.cloneNode(true);
+    this._cardImage = this._cardElement.querySelector(".card__image");
+    this._cardText = this._cardElement.querySelector(".card__text");
+    this._cardLikeButton = this._cardElement.querySelector(".card__like");
+    this._cardDeleteButton = this._cardElement.querySelector(".card__delete");
   }
 
   _getElement() {
-    const cardTemplate = document.querySelector(this._selector).content.querySelector(".card"); //содержимое card template -> карта
-    const cardElement = cardTemplate.cloneNode(true);
-    return cardElement;
+    return this._cardElement;
   }
 
   generate() {
     this._element = this._getElement();
-    this._element.querySelector(".card__text").textContent = this._name;
-    this._element.querySelector(".card__image").src = this._link;
-    this._element.querySelector(".card__image").alt = this._name;
+    this._cardText.textContent = this._name;
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
     this._setEventListeners();
 
     return this._element;
   }
 
   _likeCard() {
-    this._element.querySelector(".card__like").classList.toggle("card__like_active");
+    this._cardLikeButton.classList.toggle("card__like_active");
   }
 
   _deleteCard() {
@@ -35,13 +39,13 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._element.querySelector(".card__like").addEventListener("click", () => {
+    this._cardLikeButton.addEventListener("click", () => {
       this._likeCard();
     });
-    this._element.querySelector(".card__delete").addEventListener("click", () => {
+    this._cardDeleteButton.addEventListener("click", () => {
       this._deleteCard();
     });
-    this._element.querySelector(".card__image").addEventListener("click", () => {
+    this._cardImage.addEventListener("click", () => {
       this._openImage();
     });
   }

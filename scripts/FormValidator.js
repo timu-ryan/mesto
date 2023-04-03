@@ -8,7 +8,7 @@ export default class FormValidator {
     this._disabledSubmitButtonClass = config.disabledSubmitButtonClass;
     this._formElement = formElement;
     this._button = this._formElement.querySelector(this._submitButtonSelector);
-    this._inputs = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
   }
 
   _showInputError (inputElement, errorElement) {
@@ -25,25 +25,29 @@ export default class FormValidator {
     this._button.classList.add(this._disabledSubmitButtonClass);
     this._button.disabled = true;
   }
-  
+
+  disableButton () {
+    this._disableButton();
+  }
+
   _enableButton () {
     this._button.classList.remove(this._disabledSubmitButtonClass);
     this._button.disabled = false;
   }
 
-  hideErrors () {
-    this._inputs.forEach((input) => {
-      this._hideInputError(input, this._formElement.querySelector(`.${input.id}-error`))
-    });
+  _hideError (inputElement) {
+    this._hideInputError(inputElement, this._formElement.querySelector(`.${inputElement.id}-error`))
   }
 
-  enableEditButton() {
-    this._button.classList.remove(this._disabledSubmitButtonClass);
-    this._button.disabled = false;
+  resetValidation() {
+    this._enableButton();
+    this._inputList.forEach((inputElement) => {
+      this._hideError(inputElement) //<==очищаем ошибки ==
+    });
   }
   
-  _toggleButtonState (buttonState) {
-    if (buttonState) {
+  _toggleButtonState () {
+    if (this._hasInvalidInput()) {
       this._disableButton();
     } else {
       this._enableButton();
@@ -59,27 +63,28 @@ export default class FormValidator {
   }
   
   _hasInvalidInput () {
-    return this._inputs.some((input) => !input.validity.valid)
+    return this._inputList.some((input) => !input.validity.valid)
   }
   
   _handleFormInput (evt) {
     const inputElement = evt.target;
     const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);  //элемент с текстом ошибки
-    // console.log(inputElement.validity.valid);
     this._checkInputValidity(inputElement, errorElement);
-    const buttonState = this._hasInvalidInput();
-  
-    this._toggleButtonState(buttonState);
+    this._toggleButtonState();
   }
   
   _handleFormSubmit(evt) {
     evt.preventDefault();
   }
-  
-  enableValidation () {
+
+  _setEventListeners() {
     this._formElement.addEventListener('submit', this._handleFormSubmit);
-    this._inputs.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', (evt) => this._handleFormInput(evt))
     })
+  }
+  
+  enableValidation () {
+    this._setEventListeners();
   }
 }

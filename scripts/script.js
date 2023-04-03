@@ -57,8 +57,7 @@ function closePopup(popup) {
 }
 
 function openPopupEdit() {
-  profileFormValidator.hideErrors();
-  profileFormValidator.enableEditButton();
+  profileFormValidator.resetValidation();
   nameInput.value = profileName.textContent; //задаем value инпута значения со страницы, чтобы при открытии попапа отображались они
   descriptionInput.value = profileDescription.textContent;
   openPopup(popupEdit);
@@ -75,7 +74,6 @@ function closePopupEdit() {
 function closeAddPopup() {
   closePopup(popupNewItem);
   formNewItemElement.reset();   // очищаем input после закрытия попапа
-  placeFormValidator.hideErrors();
 }
 
 function closeCardPopup() {
@@ -112,10 +110,14 @@ function openImage(name, link) {
   openPopup(popupCard);
 }
 
-initialCards.forEach((card) => {
-  const cardObject = new Card(card, "#card-template", openImage);
+function createCard(item) {
+  const cardObject = new Card(item, "#card-template", openImage);
   const cardElement = cardObject.generate();
-  cardContainer.prepend(cardElement);
+  return cardElement;
+}
+
+initialCards.forEach((card) => {
+  cardContainer.prepend(createCard(card));
 });
 
 function handleFormAddCardSubmit(evt) {
@@ -123,12 +125,10 @@ function handleFormAddCardSubmit(evt) {
     name: placeNameInput.value,
     link: placeLinkInput.value,
   };
-  const cardObject = new Card(card, "#card-template", openImage);
-  const cardElement = cardObject.generate();
   evt.preventDefault(); // отменяет стандартную форму отправки
-  cardContainer.prepend(cardElement);
+  cardContainer.prepend(createCard(card));
   closeAddPopup();
-  placeFormValidator._disableButton();
+  placeFormValidator.disableButton();
 }
 
 popupEditOpen.addEventListener("click", openPopupEdit);
