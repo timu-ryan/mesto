@@ -1,9 +1,9 @@
 import "../pages/index.css";
-import Card from "./scripts/Card.js";
-import FormValidator from "./scripts/FormValidator.js";
-import PopupWithImage from "./scripts/PopupWithImage";
-import PopupWithForm from "./scripts/PopupWithForm";
-import UserInfo from "./scripts/UserInfo";
+import Card from "../scripts/Card.js";
+import FormValidator from "../scripts/FormValidator.js";
+import PopupWithImage from "../scripts/PopupWithImage";
+import PopupWithForm from "../scripts/PopupWithForm";
+import UserInfo from "../scripts/UserInfo";
 import { initialCards, config } from "../utils/constants.js";
 
 import {
@@ -81,7 +81,7 @@ function createCard(item) {
 function handleFormEditSubmit() {
   userInfo.setUserInfo(nameInput.value, descriptionInput.value);
   profileName.textContent = userInfo.getUserInfo().name;
-  profileDescription.textContent = userInfo.getUserInfo().link;
+  profileDescription.textContent = userInfo.getUserInfo().info;
 }
 
 function handleFormAddCardSubmit(data) {
