@@ -1,28 +1,23 @@
-import "../pages/index.css";
-import Card from "../scripts/Card.js";
-import FormValidator from "../scripts/FormValidator.js";
-import PopupWithImage from "../scripts/PopupWithImage";
-import PopupWithForm from "../scripts/PopupWithForm";
-import UserInfo from "../scripts/UserInfo";
+import "./index.css";
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
+import PopupWithImage from "../components/PopupWithImage";
+import PopupWithForm from "../components/PopupWithForm";
+import UserInfo from "../components/UserInfo";
 import { initialCards, config } from "../utils/constants.js";
 
 import {
-  popupEdit,
-  popupNewItem,
   popupEditOpen,
   popupAddOpen,
   formNewItemElement,
-  profileName,
-  profileDescription,
   cardContainer,
   profileForm,
   placeForm,
   nameInput,
   descriptionInput,
 } from "../utils/constants.js";
-import { popupCard } from "../utils/constants.js";
 
-import Section from "../scripts/Section.js";
+import Section from "../components/Section.js";
 
 const profileFormValidator = new FormValidator(config, profileForm);
 profileFormValidator.enableValidation();
@@ -32,10 +27,10 @@ placeFormValidator.enableValidation();
 
 const userInfo = new UserInfo(".profile__name-text", ".profile__description");
 
-const popupWithImage = new PopupWithImage(popupCard);
+const popupWithImage = new PopupWithImage('.popup_card');
 popupWithImage.setEventListeners();
 
-const popupAddNewCard = new PopupWithForm(popupNewItem, (evt) => {
+const popupAddNewCard = new PopupWithForm('.popup_new-item', (evt) => {
   handleFormAddCardSubmit(evt);
 });
 popupAddOpen.addEventListener("click", () => {
@@ -46,12 +41,14 @@ popupAddOpen.addEventListener("click", () => {
 });
 popupAddNewCard.setEventListeners();
 
-const popupEditProfile = new PopupWithForm(popupEdit, (evt) => {
+const popupEditProfile = new PopupWithForm('.popup_edit', (evt) => {
   handleFormEditSubmit(evt);
 });
+
 popupEditOpen.addEventListener("click", () => {
-  nameInput.value = userInfo.getUserInfo().name; //задаем value инпута значения со страницы, чтобы при открытии попапа отображались они
-  descriptionInput.value = userInfo.getUserInfo().info;
+  const user = userInfo.getUserInfo();
+  nameInput.value = user.name; //задаем value инпута значения со страницы, чтобы при открытии попапа отображались они
+  descriptionInput.value = user.info;
   profileFormValidator.resetValidation();
   popupEditProfile.open();
 });
@@ -80,8 +77,6 @@ function createCard(item) {
 
 function handleFormEditSubmit() {
   userInfo.setUserInfo(nameInput.value, descriptionInput.value);
-  profileName.textContent = userInfo.getUserInfo().name;
-  profileDescription.textContent = userInfo.getUserInfo().info;
 }
 
 function handleFormAddCardSubmit(data) {
@@ -90,6 +85,5 @@ function handleFormAddCardSubmit(data) {
     link: data.placeLink,
   };
   cardList.addItem(card);
-  //cardContainer.prepend(createCard(card));
   placeFormValidator.disableButton();
 }
