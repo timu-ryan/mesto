@@ -30,8 +30,8 @@ const userInfo = new UserInfo(".profile__name-text", ".profile__description");
 const popupWithImage = new PopupWithImage('.popup_card');
 popupWithImage.setEventListeners();
 
-const popupAddNewCard = new PopupWithForm('.popup_new-item', (evt) => {
-  handleFormAddCardSubmit(evt);
+const popupAddNewCard = new PopupWithForm('.popup_new-item', (formData) => {
+  handleFormAddCardSubmit(formData);
 });
 popupAddOpen.addEventListener("click", () => {
   formNewItemElement.reset();
@@ -41,8 +41,8 @@ popupAddOpen.addEventListener("click", () => {
 });
 popupAddNewCard.setEventListeners();
 
-const popupEditProfile = new PopupWithForm('.popup_edit', (evt) => {
-  handleFormEditSubmit(evt);
+const popupEditProfile = new PopupWithForm('.popup_edit', (formData) => {
+  handleFormEditSubmit(formData);
 });
 
 popupEditOpen.addEventListener("click", () => {
@@ -75,8 +75,8 @@ function createCard(item) {
   return cardElement;
 }
 
-function handleFormEditSubmit() {
-  userInfo.setUserInfo(nameInput.value, descriptionInput.value);
+function handleFormEditSubmit(data) {
+  userInfo.setUserInfo(data.name, data.description);
 }
 
 function handleFormAddCardSubmit(data) {

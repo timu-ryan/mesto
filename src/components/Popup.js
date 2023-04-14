@@ -21,8 +21,8 @@ export default class Popup {
     document.removeEventListener("keydown", this._handleEscClose);
   }
   closePopupOverlay(evt) {
-    if (Array.from(evt.target.classList).includes("popup")) {
-      this.close(evt.target);
+    if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
+      this.close();
     }
   }
   
@@ -31,9 +31,7 @@ export default class Popup {
       this.close();
     });
     this._popup.addEventListener("click", (evt) => {
-      if (Array.from(evt.target.classList).includes("popup")) {
-        this.close(evt.target);
-      }
+      this.closePopupOverlay(evt);
     });
   }
 }
