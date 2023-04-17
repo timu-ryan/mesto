@@ -18,6 +18,7 @@
       <main class="content">
         <section class="profile">
           <img src="<%=require('../images/avatar.jpg')%>" alt="аватар" class="profile__avatar" />
+          <button type="button" class="profile__pen"></button>
           <div>
             <div class="profile__name">
               <h1 class="profile__name-text">Жак-Ив Кусто</h1>
@@ -127,12 +128,44 @@
       </div>
     </div>
 
+    <div class="popup popup_avatar">
+      <div class="popup__container">
+        <h2 class="popup__header">Обновить аватар</h2>
+        <form action="" name="avatar" novalidate class="popup__form popup__form_object_avatar">
+          <label class="popup__field">
+            <input
+              id="profile-avatar-input"
+              type="url"
+              name="avatarLink"
+              placeholder="Ссылка на картинку"
+              required
+              class="popup__input popup__input_avatar_link"
+            />
+            <span class="profile-avatar-input-error popup__input-error"></span>
+          </label>
+          <button type="submit" disabled class="popup__button popup__button_avatar popup__button_disabled">Сохранить</button>
+        </form>
+        <button type="button" aria-label="Закрыть" class="popup__close popup__close_button_avatar"></button>
+      </div>
+    </div>
+
+    <div class="popup popup_delete-card">
+      <div class="popup__container">
+        <h2 class="popup__header">Вы уверены?</h2>
+        <form action="" name="avatar" novalidate class="popup__form popup__form_object_delete-card">
+          <button type="submit" class="popup__button popup__button_delete-card">Да</button>
+        </form>
+        <button type="button" aria-label="Закрыть" class="popup__close popup__close_button_delete-card"></button>
+      </div>
+    </div>
+
     <template id="card-template">
       <article class="card">
         <img class="card__image" />
         <div class="card__description">
           <h2 class="card__text"></h2>
           <button type="button" class="card__like"></button>
+          <p class="card__like-number">0</p>
         </div>
         <button type="button" aria-label="удалить" class="card__delete">
           <div class="card__trash-lid"></div>
