@@ -4,17 +4,19 @@ export default class Api {
     this._headers = config.headers;
   }
 
+  _getResponseData(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
   getInitialCards() {
      return fetch(`${this._url}/cards`, {
       method: 'GET',
       headers: this._headers,
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      .then(res => this._getResponseData(res));
   }
 
   getMyProfile() {
@@ -22,12 +24,7 @@ export default class Api {
       method: 'GET',
       headers: this._headers,
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(res => this._getResponseData(res));
   }
 
   editMyProfile(newName, newDescription) {
@@ -39,12 +36,7 @@ export default class Api {
         about: newDescription
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(res => this._getResponseData(res));
   }
 
   setNewCard(newCardName, newCardLink, isUser) {
@@ -57,12 +49,7 @@ export default class Api {
         isUser: isUser,
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(res => this._getResponseData(res));
   }
   
   setLikeCard(cardId) {
@@ -70,12 +57,7 @@ export default class Api {
       method: 'PUT',
       headers: this._headers,
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(res => this._getResponseData(res));
   }
 
   removeLikeCard(cardId) {
@@ -83,12 +65,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers,
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      .then(res => this._getResponseData(res));
   }
 
   deleteCard(cardId) {
@@ -96,12 +73,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers,
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(res => this._getResponseData(res));
   }
 
   setNewAvatar(data) {
@@ -112,12 +84,7 @@ export default class Api {
         avatar: data,
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(res => this._getResponseData(res));
   }
 
 }

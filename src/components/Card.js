@@ -1,5 +1,6 @@
 export default class Card {
-  constructor(data, selector, imageClick, trashClick, likeClick, likeStatus) {
+  constructor(data, selector, imageClick, trashClick, likeClick, likeStatus, userId) {
+    
     this._name = data.name;
     this._link = data.link;
     this._id = data._id;
@@ -18,10 +19,12 @@ export default class Card {
     this._likeNumber = this._cardElement.querySelector(".card__like-number");
     this._likeClick = likeClick;
     this._likeStatus = likeStatus;
-    this._isLiked = this._likeStatus();
+    this._isLiked = this._likeStatus(this);
     this._number = this.likes.length;
     // this._isUserCard = isUserCard;
+    this._userId = userId;
   }
+
 
   _getElement() {
     return this._cardElement;
@@ -35,6 +38,7 @@ export default class Card {
   }
 
   generate() {
+
     this._element = this._getElement();
     this._cardText.textContent = this._name;
     this._cardImage.src = this._link;
@@ -75,22 +79,19 @@ export default class Card {
   }
 
   _openDeletePopup() {
-    this._trashClick();
+    this._trashClick(this);
   }
 
   _toggleLike() {
     if (this._isLiked) {
-      this.removeLikeCard();
-      this._likeClick(this._isLiked);
-      this._isLiked = !this._isLiked;
-      this._likeNumber.textContent = this._number + 1;
-      this._number = this._number + 1;
+      // this.removeLikeCard();
+      this._likeClick(this, this._isLiked);
+      // console.log(123)
+
     } else {
-      this.addLikeCard();
-      this._likeClick(this._isLiked);        
-      this._isLiked = !this._isLiked;
-      this._likeNumber.textContent = this._number - 1;
-      this._number = this._number - 1;
+      // this.addLikeCard();
+      this._likeClick(this, this._isLiked);        
+      
     }
   }
 
