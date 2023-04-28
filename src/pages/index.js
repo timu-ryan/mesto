@@ -89,41 +89,45 @@ popupAvatarOpen.addEventListener("click", () => {
 popupEditAvatar.setEventListeners();
 
 function handleFormEditAvatarSubmit(data) {
-  userInfo.setAvatar(data.avatarLink);
   // avatarImage.src = data.avatarLink;
   popupEditAvatar.renderLoading(true);
-  api.setNewAvatar(data.avatarLink)
-    .catch(err => console.log(`error: ${err}`))
+  api
+    .setNewAvatar(data.avatarLink)
+    .then((res) => userInfo.setAvatar(data.avatarLink))
+    .then((res) => popupEditAvatar.close())
+    .catch((err) => console.log(`error: ${err}`))
     .finally(() => {
       popupEditAvatar.renderLoading(false);
-      popupEditAvatar.close();
     });
 }
 
 function deleteCard(card) {
-    popupDeleteCard.renderLoading(true);
-    api.deleteCard(card._id)
-      .then(res => {
-        card.deleteCard();
-      })
-      .catch(err => console.log(`error: ${err}`))
-      .finally(() => {
-        popupDeleteCard.renderLoading(false);
-        popupDeleteCard.close();
-      })
+  popupDeleteCard.renderLoading(true);
+  api
+    .deleteCard(card._id)
+    .then((res) => {
+      card.deleteCard();
+    })
+    .then((res) => popupDeleteCard.close())
+    .catch((err) => console.log(`error: ${err}`))
+    .finally(() => {
+      popupDeleteCard.renderLoading(false);
+    });
 }
 
-const popupDeleteCard = new PopupWithConfirmation(".popup_delete-card", (card) => {
-  deleteCard(card);
-});
+const popupDeleteCard = new PopupWithConfirmation(
+  ".popup_delete-card",
+  (card) => {
+    deleteCard(card);
+  }
+);
 popupDeleteCard.setEventListeners();
-
 
 function openCardDeletePopup(card) {
   popupDeleteCard.open(card);
 }
 
-const cardList = new Section(///////////---------------------------------------------------------------------
+const cardList = new Section( ///////////---------------------------------------------------------------------
   {
     //items: [],
     renderer: (item) => {
@@ -141,33 +145,47 @@ function openImagePopup(name, link) {
 function likeStatus(card) {
   let isSetLike = true;
   for (let i = 0; i < card.likes.length; i++) {
-    isSetLike = card.likes[i]._id !== userInfo.getId();
+    //isSetLike = card.likes[i]._id !== userInfo.getId();
+    isSetLike = card.getLikeId(i) !== userInfo.getId();
+    if (!isSetLike) return isSetLike;
   }
+
   return isSetLike;
 }
 
 function handleLikeClick(card, likeStatus) {
   if (likeStatus) {
-    api.setLikeCard(card._id)
-    .then(res => {
-      card.addLikeCard();
-      card._isLiked = !card._isLiked;
-      card._likeNumber.textContent = card._number + 1;
-      card._number = card._number + 1;
-    })
-      .catch(err => console.log(err));
-  } else {
-    api.removeLikeCard(card._id)
-      .then(res => {
-        card.removeLikeCard();
-        card._isLiked = !card._isLiked;
-        card._likeNumber.textContent = card._number - 1;
-        card._number = card._number - 1;
+    api
+      .setLikeCard(card.getId())
+      .then((res) => {
+        card.addLikeCard();
+        //card._isLiked = !card._isLiked;
+        card.setLikeStatus(!card.getLikeStatus());
+        //card._likeNumber.textContent = card._number + 1;
+        card.setLikeNumber(card.getNumber() + 1);
+        //card._number = card._number + 1;
+        card.setNumber(card.getNumber() + 1);
+        //console.log(1)
+        //console.log(!card.getLikeStatus())
       })
-      .catch(err => console.log(`error: ${err}`));
+      .catch((err) => console.log(err));
+  } else {
+    api
+      .removeLikeCard(card.getId())
+      .then((res) => {
+        card.removeLikeCard();
+        //card._isLiked = !card._isLiked;
+        card.setLikeStatus(!card.getLikeStatus());
+        //card._likeNumber.textContent = card._number - 1;
+        card.setLikeNumber(card.getNumber() - 1);
+        //card._number = card._number - 1;
+        card.setNumber(card.getNumber() - 1);
+        //console.log(2)
+        //console.log(!card.getLikeStatus())
+      })
+      .catch((err) => console.log(`error: ${err}`));
   }
 }
-
 
 function createCard(item) {
   const cardObject = new Card(
@@ -177,7 +195,7 @@ function createCard(item) {
     openCardDeletePopup,
     handleLikeClick,
     likeStatus,
-    userInfo.getId(),
+    userInfo.getId()
   );
   const cardElement = cardObject.generate();
   return cardElement;
@@ -186,32 +204,28 @@ function createCard(item) {
 function handleFormEditSubmit(data) {
   userInfo.setUserInfo(data.name, data.description);
   popupEditProfile.renderLoading(true);
-  api.editMyProfile(data.name, data.description)
-    .catch(err => console.log(`error: ${err}`))
+  api
+    .editMyProfile(data.name, data.description)
+    .catch((err) => console.log(`error: ${err}`))
     .finally(() => {
       popupEditProfile.renderLoading(false);
       popupEditProfile.close();
     });
-  }
+}
 
 function handleFormAddCardSubmit(data) {
   const card = {
     name: data.placeName,
     link: data.placeLink,
-    //likes: (data.likes = []),
-    //id: data.id,
-    //isUser: true,
   };
-  //cardList.addItem(card);
   popupAddNewCard.renderLoading(true);
-  api.setNewCard(card.name, card.link)
-    .then(res => {
+  api
+    .setNewCard(card.name, card.link)
+    .then((res) => {
       res.isUser = true;
-      // console.log(res);
-      // console.log(card);
       cardList.addItem(res);
     })
-    .catch(err => console.log(`error: ${err}`))
+    .catch((err) => console.log(`error: ${err}`))
     .finally(() => {
       popupAddNewCard.renderLoading(false);
       popupAddNewCard.close();
@@ -241,18 +255,14 @@ function handleFormAddCardSubmit(data) {
 //   })
 //   .catch((err) => console.log(`Error: ${err}`));
 
-  Promise.all([api.getMyProfile(), api.getInitialCards()])
-    .then(([info, initialCards]) => {
-      userInfo.setAvatar(info.avatar);
-      userInfo.setUserInfo(info.name, info.about);
-      userInfo._id = info._id;
-      return [info, initialCards];
-    })
-    .then(([info, initialCards]) => {
-      initialCards.reverse().forEach((item) => {
-        item.isUser = (userInfo.getId() === item.owner._id);
-        cardList.addItem(item);
-      });
-      // return res;
-    })
-    .catch((err) => console.log(`Error: ${err}`));
+Promise.all([api.getMyProfile(), api.getInitialCards()])
+  .then(([info, initialCards]) => {
+    userInfo.setAvatar(info.avatar);
+    userInfo.setUserInfo(info.name, info.about);
+    userInfo._id = info._id;
+    initialCards.forEach((item) => {
+      item.isUser = userInfo.getId() === item.owner._id;
+    });
+    cardList.renderItems(initialCards);
+  })
+  .catch((err) => console.log(`Error: ${err}`));

@@ -25,6 +25,38 @@ export default class Card {
     this._userId = userId;
   }
 
+  getId() {
+    return this._id;
+  }
+
+  getLikeId(index) {
+    return this.likes[index]._id;
+  }
+
+  getLikeStatus() {
+    return this._isLiked;
+  }
+
+  setLikeStatus(isLiked) {
+    this._isLiked = isLiked;
+  }
+
+  getLikeNumber() {
+    return this._likeNumber.textContent;
+  }
+
+  setLikeNumber(likeNumber) {
+    this._likeNumber.textContent = likeNumber;
+  }
+
+  getNumber() {
+    return this._number;
+  }
+
+  setNumber(number) {
+    this._number = number
+  }
+
 
   _getElement() {
     return this._cardElement;
@@ -38,7 +70,6 @@ export default class Card {
   }
 
   generate() {
-
     this._element = this._getElement();
     this._cardText.textContent = this._name;
     this._cardImage.src = this._link;
