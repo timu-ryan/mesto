@@ -93,8 +93,10 @@ function handleFormEditAvatarSubmit(data) {
   popupEditAvatar.renderLoading(true);
   api
     .setNewAvatar(data.avatarLink)
-    .then((res) => userInfo.setAvatar(data.avatarLink))
-    .then((res) => popupEditAvatar.close())
+    .then((res) => {
+      userInfo.setAvatar(data.avatarLink);
+      popupEditAvatar.close();
+    })
     .catch((err) => console.log(`error: ${err}`))
     .finally(() => {
       popupEditAvatar.renderLoading(false);
@@ -202,14 +204,17 @@ function createCard(item) {
 }
 
 function handleFormEditSubmit(data) {
-  userInfo.setUserInfo(data.name, data.description);
+  //userInfo.setUserInfo(data.name, data.description);
   popupEditProfile.renderLoading(true);
   api
     .editMyProfile(data.name, data.description)
+    .then(res => {
+      userInfo.setUserInfo(res.name, res.about);
+      popupEditProfile.close();
+    })
     .catch((err) => console.log(`error: ${err}`))
     .finally(() => {
       popupEditProfile.renderLoading(false);
-      popupEditProfile.close();
     });
 }
 
@@ -224,11 +229,11 @@ function handleFormAddCardSubmit(data) {
     .then((res) => {
       res.isUser = true;
       cardList.addItem(res);
+      popupAddNewCard.close();
     })
     .catch((err) => console.log(`error: ${err}`))
     .finally(() => {
       popupAddNewCard.renderLoading(false);
-      popupAddNewCard.close();
     });
   placeFormValidator.disableButton();
 }
