@@ -1,19 +1,18 @@
-# Проект: Место
+### Место
+В результате выполнения проекта были освоены следующие навыки:
+1. webpack
+2. babel
+3. BEM
+4. popups, validation
+5. встраивание объектов с API
+6. работа с мета-информацией
+Были использованы специальные метатеги в формате [OpenGraph](https://ogp.me/), чтобы в социальных было красивое превью.
+Настроена другая мета информация, иконки, описание сайта.
 
-### Обзор
+[Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
 
-- Figma
-- Картинки
+Gafarov Timur - tg: [@timuryanst](https://t.me/timuryanst) - timu.ryanst@gmail.com
 
-**Figma**
+Project Link: [https://github.com/timu-ryan/it-must-be-done-perfectly](https://github.com/timu-ryan/it-must-be-done-perfectly)
 
-- [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
-
-# Проектная работа ЯндексПрактикум Mesto
-
-Содержит профиль, с возможностью изменять имя и место работы, аватар
-На странцу добавлены 6 картинок с описанием и иконкой like
-
-# Ссылка на проект в github pages
-
-https://timu-ryan.github.io/mesto/
+GitHub Pages: [https://timu-ryan.github.io/it-must-be-done-perfectly/](https://timu-ryan.github.io/it-must-be-done-perfectly/)
