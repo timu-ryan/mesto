@@ -13,6 +13,6 @@
 
 Gafarov Timur - tg: [@timuryanst](https://t.me/timuryanst) - timu.ryanst@gmail.com
 
-Project Link: [https://github.com/timu-ryan/it-must-be-done-perfectly](https://github.com/timu-ryan/it-must-be-done-perfectly)
+Project Link: [https://github.com/timu-ryan/mesto](https://github.com/timu-ryan/mesto)
 
-GitHub Pages: [https://timu-ryan.github.io/it-must-be-done-perfectly/](https://timu-ryan.github.io/it-must-be-done-perfectly/)
+GitHub Pages: [https://timu-ryan.github.io/mesto/](https://timu-ryan.github.io/mesto/)
